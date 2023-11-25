@@ -8,6 +8,7 @@ public class EncryptionKey{
         String mensagemCifrada = "ola mundo!";
 
         int op;
+        new EncryptionInterface();
 
         do{
             System.err.println("1. criptografar\n2. desincriptografar\n0. sair");
