@@ -29,14 +29,14 @@ public class CaesarCipher{
     }
 
 
-    private static void cifrarArquivo(String caminhoEntrada, String caminhoSaida, int shift, boolean decifrar) {
+    public static void cifrarArquivo(String caminhoEntrada, String caminhoSaida, int shift, boolean decifrar) {
         try (BufferedReader leitor = new BufferedReader(new FileReader(caminhoEntrada));
              BufferedWriter escritor = new BufferedWriter(new FileWriter(caminhoSaida))) {
 
             StringBuilder textoOriginal = new StringBuilder();
             String linha;
             while ((linha = leitor.readLine()) != null) {
-                textoOriginal.append(linha).append("\n");
+                textoOriginal.append(linha).append(System.lineSeparator()); // Usando System.lineSeparator() para obter a quebra de linha adequada
             }
 
             String textoProcessado;
@@ -53,6 +53,7 @@ public class CaesarCipher{
             } else {
                 System.out.println("Arquivo cifrado com sucesso!");
             }
+
 
         } catch (IOException e) {
             System.err.println("Erro ao processar o arquivo: " + e.getMessage());
