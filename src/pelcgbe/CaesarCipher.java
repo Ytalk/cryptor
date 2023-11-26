@@ -29,33 +29,28 @@ public class CaesarCipher{
     }
 
 
-    public static void cifrarArquivo(String caminhoEntrada, String caminhoSaida, int shift, boolean decifrar) {
-        try (BufferedReader leitor = new BufferedReader(new FileReader(caminhoEntrada));
-             BufferedWriter escritor = new BufferedWriter(new FileWriter(caminhoSaida))) {
+    public static String readFile(String caminhoEntrada) {
+        StringBuilder textoOriginal = new StringBuilder();
 
-            StringBuilder textoOriginal = new StringBuilder();
+        try (BufferedReader leitor = new BufferedReader(new FileReader(caminhoEntrada));){
+
             String linha;
             while ((linha = leitor.readLine()) != null) {
                 textoOriginal.append(linha).append(System.lineSeparator()); // Usando System.lineSeparator() para obter a quebra de linha adequada
             }
 
-            String textoProcessado;
-            if (decifrar) {
-                textoProcessado = decrypt(textoOriginal.toString(), -shift);
-            } else {
-                textoProcessado = encrypt(textoOriginal.toString(), shift);
-            }
-
-            escritor.write(textoProcessado);
-
-            if (decifrar) {
-                System.out.println("Arquivo decifrado com sucesso!");
-            } else {
-                System.out.println("Arquivo cifrado com sucesso!");
-            }
-
-
         } catch (IOException e) {
+            System.err.println("Erro ao processar o arquivo: " + e.getMessage());
+        }
+
+        return textoOriginal.toString();
+    }
+
+    public static void writeFile(String output_path, String message){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(output_path))){
+
+            writer.write(message);
+        }catch(IOException e){
             System.err.println("Erro ao processar o arquivo: " + e.getMessage());
         }
     }

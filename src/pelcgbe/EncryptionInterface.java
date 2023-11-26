@@ -28,24 +28,37 @@ public class EncryptionInterface{
         main_container.setLayout(null);
 
         //painel para entrada de texto
-        JPanel input_panel = new JPanel(new GridLayout(1, 2));
+        JPanel input_panel = new JPanel(new BorderLayout());
+
         JLabel labelOriginal = new JLabel("MENSAGEM");
+        labelOriginal.setPreferredSize(new Dimension(190, 100));
+        labelOriginal.setHorizontalAlignment(SwingConstants.CENTER);
+        labelOriginal.setVerticalAlignment(SwingConstants.CENTER);
+
         campoTextoOriginal = new JTextField(100);
-        input_panel.add(labelOriginal);
-        input_panel.add(campoTextoOriginal);
-        input_panel.setBounds(200, 150, 600, 100);///////////////////////////////
+        campoTextoOriginal.setPreferredSize(new Dimension(300, 100));
+        input_panel.add(labelOriginal, BorderLayout.WEST);
+        input_panel.add(campoTextoOriginal, BorderLayout.CENTER);
+        input_panel.setBounds(200, 150, 800, 100);///////////////////////////////
         main_container.add(input_panel);//painel entrada
         main_container.add(Box.createVerticalStrut(100));
         input_panel.setAlignmentX(Component.TOP_ALIGNMENT);
 
         //painel para SAIDA DE TEXTO
-        JPanel output_panel = new JPanel(new GridLayout(1, 2));
+        JPanel output_panel = new JPanel(new BorderLayout());
+
         JLabel labelResultado = new JLabel("MENSAGEM (DE)CODIFICADA");
+        labelResultado.setPreferredSize(new Dimension(190, 100));
+        labelResultado.setHorizontalAlignment(SwingConstants.CENTER);
+        labelResultado.setVerticalAlignment(SwingConstants.CENTER);
+
         campoTextoResultado = new JTextField();
-        output_panel.add(labelResultado);
-        output_panel.add(campoTextoResultado);
+        campoTextoResultado.setPreferredSize(new Dimension(400, 100));
+        output_panel.add(labelResultado, BorderLayout.WEST);
+        output_panel.add(campoTextoResultado, BorderLayout.CENTER);
         main_container.add(output_panel);//painel saida
-        output_panel.setBounds(600, 650, 600, 100);///////////////////////////////
+        output_panel.setBounds(600, 650, 800, 100);///////////////////////////////
+
         main_container.add(Box.createVerticalStrut(100));
         input_panel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
 
@@ -99,22 +112,21 @@ public class EncryptionInterface{
 
         // painel para os botões
         JPanel button_panel = new JPanel();
-        button_panel.setLayout(new GridLayout(1, 3));
+        button_panel.setLayout(new GridLayout(1, 4));
 
         JButton open_file_button = new JButton("open file");
-        open_file_button.setBounds(0, 0, 90, 30);
+        //open_file_button.setBounds(0, 0, 90, 30);
         open_file_button.setFont(new Font("Arial", Font.PLAIN, 10));
         button_panel.add(open_file_button);
-        open_file_button.addActionListener(new ActionListener() {
+        open_file_button.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
-                int key = Integer.parseInt(txt_key.getText());
-                CaesarCipher.cifrarArquivo("escreva_aqui.txt", "escreva_aqui.txt", key, false);//metodo
+            public void actionPerformed(ActionEvent e){
+                campoTextoOriginal.setText(CaesarCipher.readFile("escreva_aqui.txt"));//metodo
             }
         });
 
-        JButton encrypt_button = new JButton("encrypt file");
-        encrypt_button.setBounds(0, 0, 90, 30);
+        JButton encrypt_button = new JButton("encrypt");
+        //encrypt_button.setBounds(0, 0, 90, 30);
         encrypt_button.setFont(new Font("Arial", Font.PLAIN, 10));
         button_panel.add(encrypt_button);
         encrypt_button.addActionListener(new ActionListener() {
@@ -127,8 +139,8 @@ public class EncryptionInterface{
             }
         });
 
-        JButton decrypt_button = new JButton("decrypt file");
-        decrypt_button.setBounds(100, 200, 90, 30);
+        JButton decrypt_button = new JButton("decrypt");
+        //decrypt_button.setBounds(100, 200, 90, 30);
         decrypt_button.setFont(new Font("Arial", Font.PLAIN, 10));
         button_panel.add(decrypt_button);
         decrypt_button.addActionListener(new ActionListener() {
@@ -141,7 +153,19 @@ public class EncryptionInterface{
             }
         });
 
-        button_panel.setBounds(400, 400, 300, 80);
+        JButton save_button = new JButton("to save");
+        //decrypt_button.setBounds(100, 200, 90, 30);
+        save_button.setFont(new Font("Arial", Font.PLAIN, 10));
+        button_panel.add(save_button);
+        save_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                String texto = campoTextoResultado.getText();
+                CaesarCipher.writeFile("cifrado.txt", texto);
+            }
+        });
+
+        button_panel.setBounds(400, 400, 300, 30);
 
         main_container.add(button_panel);//painel botao
 
