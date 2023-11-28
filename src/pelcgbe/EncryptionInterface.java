@@ -1,17 +1,4 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import java.awt.*;
-import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -54,7 +41,7 @@ public class EncryptionInterface{
 
         input_panel.add(original_label, BorderLayout.WEST);
         input_panel.add(scrr, BorderLayout.CENTER);
-        input_panel.setBounds(200, 150, 1100, 100);///////////////////////////////
+        input_panel.setBounds(100, 125, 1100, 100);///////////////////////////////
         main_container.add(input_panel);//painel entrada
         main_container.add(Box.createVerticalStrut(100));
         input_panel.setAlignmentX(Component.TOP_ALIGNMENT);
@@ -74,7 +61,7 @@ public class EncryptionInterface{
         output_panel.add(result_label, BorderLayout.WEST);
         output_panel.add(scrrl, BorderLayout.CENTER);
         main_container.add(output_panel);//painel saida
-        output_panel.setBounds(200, 580, 1100, 100);///////////////////////////////
+        output_panel.setBounds(100, 425, 1100, 100);///////////////////////////////
 
         main_container.add(Box.createVerticalStrut(100));
         input_panel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
@@ -96,7 +83,7 @@ public class EncryptionInterface{
             // adiciona grid key
             key_panel.add(label_image, BorderLayout.WEST);
             key_panel.add(txt_key, BorderLayout.EAST);
-            key_panel.setBounds(200, 380, 100, 50);///////////////////
+            key_panel.setBounds(100, 300, 100, 50);///////////////////
             main_container.add(key_panel);//painel key
 
 
@@ -126,7 +113,7 @@ public class EncryptionInterface{
 
             upDown_panel.add(up, BorderLayout.NORTH);
             upDown_panel.add(down, BorderLayout.SOUTH);
-            upDown_panel.setBounds(320, 380, 44, 50);/////////////////
+            upDown_panel.setBounds(210, 300, 44, 50);/////////////////
             main_container.add(upDown_panel);
 
         // painel para os botões
@@ -138,7 +125,7 @@ public class EncryptionInterface{
         button_panel.add(encrypt_button);
         encrypt_button.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 String text = original_text_box.getText();
                 int key = Integer.parseInt(txt_key.getText());
                 String resultado = CaesarCipher.encrypt(text, key);
@@ -159,12 +146,12 @@ public class EncryptionInterface{
             }
         });
 
-        button_panel.setBounds(1100, 400, 200, 30);////////////////////////
+        button_panel.setBounds(1000, 320, 200, 30);////////////////////////
         main_container.add(button_panel);//painel botao cifras
 
 
         JButton open_file_button = new JButton("open file");
-        open_file_button.setBounds(1210, 100, 90, 30);
+        open_file_button.setBounds(1110, 80, 90, 30);
         open_file_button.setFont(new Font("Arial", Font.PLAIN, 10));
         main_container.add(open_file_button);
         open_file_button.addActionListener(new ActionListener(){
@@ -175,7 +162,7 @@ public class EncryptionInterface{
         });
 
         JButton save_button = new JButton("to save");
-        save_button.setBounds(1210, 700, 90, 30);
+        save_button.setBounds(1110, 550, 90, 30);
         save_button.setFont(new Font("Arial", Font.PLAIN, 10));
         main_container.add(save_button);
         save_button.addActionListener(new ActionListener() {
@@ -195,4 +182,5 @@ public class EncryptionInterface{
         frame.pack();
         frame.setVisible(true);
     }
+   
 }

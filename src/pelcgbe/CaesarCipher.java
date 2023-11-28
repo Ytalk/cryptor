@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JTextArea;
 
@@ -48,6 +49,11 @@ public class CaesarCipher{
             String file_path = save_file.getAbsolutePath();
             if (!file_path.endsWith(".txt")){
                 save_file = new File(file_path + ".txt");
+            }
+
+            if (user_selection == JFileChooser.APPROVE_OPTION) {
+                String pop_path = file_chooser.getSelectedFile().getAbsolutePath();
+                JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso em: " + pop_path, "Arquivo salvo com sucesso!", JOptionPane.INFORMATION_MESSAGE);
             }
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(save_file))){
