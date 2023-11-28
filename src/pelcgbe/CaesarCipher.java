@@ -1,8 +1,13 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JTextArea;
+
 
 public class CaesarCipher{
     private static final int alphabet_lenght = 26;
@@ -23,37 +28,67 @@ public class CaesarCipher{
         return encrypted.toString();
     }
 
-
     public static String decrypt(String txt, int key) {
         return encrypt(txt, -key);
     }
+    
 
+    public void writeFile(String txt){
+        JFileChooser file_chooser = new JFileChooser();
+        file_chooser.setDialogTitle("Specify a directory to save");
 
-    public static String readFile(String input_path){
-        StringBuilder original_txt = new StringBuilder();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files (*.txt)", "txt");
+        file_chooser.setFileFilter(filter);
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(input_path));){
-            String line;
+        int user_selection = file_chooser.showSaveDialog(null);
 
-            while ((line = reader.readLine()) != null){
-                original_txt.append(line).append(System.lineSeparator());
+        if(user_selection == JFileChooser.APPROVE_OPTION){
+            File save_file = file_chooser.getSelectedFile();
+
+            String file_path = save_file.getAbsolutePath();
+            if (!file_path.endsWith(".txt")){
+                save_file = new File(file_path + ".txt");
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(save_file))){
+                writer.write(txt);
+                System.out.println("Arquivo salvo com sucesso.");
+            } 
+            catch (IOException e){
+                e.printStackTrace();
             }
         }
-        catch (IOException e){
-            System.err.println("erro ao ler arquivo: " + e.getMessage());
-        }
-
-        return original_txt.toString();
     }
 
+    public void readFile(JTextArea text_area){
+        JFileChooser file_chooser = new JFileChooser();
+        file_chooser.setDialogTitle("Specify a file to open");
 
-    public static void writeFile(String output_path, String message){
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(output_path))){
+        FileNameExtensionFilter default_filter = new FileNameExtensionFilter("Text Files (*.txt)", "txt");
+        file_chooser.setFileFilter(default_filter);
+        //file_chooser.setAcceptAllFileFilterUsed(false);
+        //file_chooser.addChoosableFileFilter(new FileNameExtensionFilter("All Files", "*"));
 
-            writer.write(message);
-        }catch(IOException e){
-            System.err.println("erro ao escrever arquivo: " + e.getMessage());
+        int user_selection = file_chooser.showOpenDialog(null);
+
+        if(user_selection == JFileChooser.APPROVE_OPTION){
+            File open_file = file_chooser.getSelectedFile();
+
+            try(BufferedReader reader = new BufferedReader(new FileReader(open_file))){
+                StringBuilder txt = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null){
+                    txt.append(line).append("\n");
+                }
+
+                text_area.setText(txt.toString());
+                System.out.println("Arquivo aberto com sucesso.");
+            } 
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
-    
+
 }

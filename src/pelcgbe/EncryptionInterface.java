@@ -15,11 +15,20 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+
 public class EncryptionInterface{
     private JTextArea original_text_box;
     private JTextArea result_text_box;
     private int valor = 0;
-    CaesarCipher CaesarCipher;
+    CaesarCipher CaesarCipher = new CaesarCipher();
 
     public EncryptionInterface(){
         JFrame frame = new JFrame("Cryptor");
@@ -37,7 +46,7 @@ public class EncryptionInterface{
         original_label.setPreferredSize(new Dimension(190, 100));
         original_label.setHorizontalAlignment(SwingConstants.CENTER);
         original_label.setVerticalAlignment(SwingConstants.CENTER);
-
+        
         original_text_box = new JTextArea();
         original_text_box.setPreferredSize(new Dimension(300, 100));
         JScrollPane scrr = new JScrollPane(original_text_box);
@@ -161,7 +170,7 @@ public class EncryptionInterface{
         open_file_button.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                original_text_box.setText(CaesarCipher.readFile("escreva_aqui.txt"));//metodo
+                CaesarCipher.readFile(original_text_box);//metodo
             }
         });
 
@@ -169,15 +178,20 @@ public class EncryptionInterface{
         save_button.setBounds(1210, 700, 90, 30);
         save_button.setFont(new Font("Arial", Font.PLAIN, 10));
         main_container.add(save_button);
-        save_button.addActionListener(new ActionListener(){
+        save_button.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                String texto = result_text_box.getText();
-                CaesarCipher.writeFile("cifrado.txt", texto);
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    CaesarCipher.writeFile(result_text_box.getText());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
+        
 
         frame.setLocationRelativeTo(null);
+        frame.setPreferredSize(new Dimension(1280, 720));
         frame.pack();
         frame.setVisible(true);
     }
